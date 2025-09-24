@@ -13,7 +13,7 @@
     }
     body {
       background: white;
-      padding: 20px;
+      padding: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -23,7 +23,7 @@
     .container {
       max-width: 500px;
       width: 100%;
-      padding: 25px;
+      padding: 20px;
       text-align: center;
       position: relative;
       opacity: 0;
@@ -37,10 +37,10 @@
       }
     }
 
-    /* ✨ Mensagem de erro: acima da imagem, sem cobrir */
+    /* Erro no topo */
     .error-box {
       position: absolute;
-      top: -60px; /* acima do contêiner */
+      top: -60px;
       left: 50%;
       transform: translateX(-50%) scale(0.9);
       background: #d32f2f;
@@ -55,7 +55,7 @@
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .error-box.show {
-      top: 20px; /* desce suavemente para cima da imagem, mas NÃO a cobre */
+      top: 10px;
       transform: translateX(-50%) scale(1);
       opacity: 1;
     }
@@ -66,18 +66,42 @@
       margin: 0 auto 15px;
       display: block;
     }
-    .progress-bar {
-      height: 12px;
+
+    /* Barras de progresso GRANDES (24px) */
+    .progress-container {
+      height: 24px; /* MUITO GROSSO */
       background: #eee;
-      border-radius: 6px;
-      margin: 15px 0;
+      border-radius: 12px;
       overflow: hidden;
+      margin: 15px auto;
+      width: 90%;
+      position: relative;
     }
     .progress-fill {
       height: 100%;
       background: #4caf50;
-      transition: width 0.5s ease;
+      transition: width 0.4s ease;
     }
+
+    /* Percentual acima do primeiro processador, alinhado à direita */
+    .percent-label {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      text-align: right;
+      margin-bottom: 5px;
+      width: 90%;
+      margin-left: auto;
+    }
+
+    /* Texto entre os processadores (só na tela 2) */
+    .middle-text {
+      font-size: 19px;
+      font-weight: bold;
+      color: #333;
+      margin: 15px 0;
+    }
+
     .label {
       font-size: 19px;
       font-weight: bold;
@@ -120,12 +144,26 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       background: #3d8b40;
     }
+
+    /* Botão final: animação mais rápida */
+    #screen4 button {
+      animation: pulseGlow 1.4s infinite ease-in-out; /* Acelerado */
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+      50% { transform: scale(1.03); box-shadow: 0 6px 14px rgba(76, 175, 80, 0.6); }
+    }
+
     .disclaimer {
       font-size: 14px;
-      color: #555;
+      color: black;
       text-align: left;
       margin-top: 20px;
       line-height: 1.5;
+    }
+    .disclaimer strong {
+      font-weight: bold;
+      color: black;
     }
     .screen {
       display: none;
@@ -133,21 +171,14 @@
     .screen.active {
       display: block;
     }
-    .loading-text {
-      font-size: 19px;
-      font-weight: bold;
-      margin: 20px 0;
-      text-align: left;
-      color: black;
-    }
     .video-container {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%;
+      padding-bottom: 75%;
       margin: 20px 0;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .video-iframe {
       position: absolute;
@@ -164,14 +195,17 @@
       margin: 20px 0;
       color: black;
     }
+    .instructions p {
+      margin-bottom: 16px;
+    }
     .instructions strong {
       font-weight: bold;
       color: black;
     }
     .back-arrow {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 10px;
+      left: 10px;
       font-size: 24px;
       cursor: pointer;
       z-index: 10;
@@ -192,22 +226,15 @@
       .logo {
         width: 180px;
       }
-      .label {
+      .label, .instructions, .middle-text {
         font-size: 17px;
       }
-      input {
+      input, button {
         padding: 12px;
         font-size: 16px;
       }
-      button {
-        padding: 12px;
-        font-size: 16px;
-      }
-      .instructions {
-        font-size: 17px;
-      }
-      .loading-text {
-        font-size: 17px;
+      .percent-label {
+        font-size: 15px;
       }
     }
   </style>
@@ -217,14 +244,14 @@
   <div class="container screen active" id="screen1">
     <div class="error-box" id="errorMessage"></div>
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
-    <div class="progress-bar">
+    <div class="progress-container">
       <div class="progress-fill" style="width: 20%;"></div>
     </div>
     <div class="label">ESCREVA SEU NUMERO DO WHATSAPP</div>
     <input type="tel" id="whatsapp" placeholder="Digite aqui o seu número..." maxlength="9" inputmode="numeric" />
     <button onclick="validateAndContinue()">Continuar</button>
     <p class="disclaimer">
-      Ao clicar em alguma das opções, você concorda com os Termos de utilização e serviço, Política de privacidade, Política de subscrição e Política de cookies.
+      Ao clicar em alguma das opções, você concorda com os <strong>Termos de utilização e serviço</strong>, <strong>Política de privacidade</strong>, <strong>Política de subscrição</strong> e <strong>Política de cookies</strong>.
     </p>
     <div class="watermark">Desenvolvido por: @hacker ABD</div>
   </div>
@@ -233,14 +260,22 @@
   <div class="container screen" id="screen2">
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
     <div class="back-arrow" onclick="goBackToScreen1()">←</div>
-    <div class="progress-bar">
+    
+    <div class="percent-label" id="percentLabel">0%</div>
+    <div class="progress-container">
       <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
     </div>
-    <div class="loading-text">
-      Procurando uma vaga no grupo <span id="percent">0%</span>
+
+    <div class="middle-text">
+      Procurando uma vaga no grupo
     </div>
-    <div class="progress-bar">
+
+    <div class="progress-container">
       <div class="progress-fill" id="progressBar" style="width: 0%;"></div>
+    </div>
+
+    <div style="font-size: 18px; font-weight: bold; margin-top: 15px; color: #333;">
+      Assista ao próximo vídeo enquanto procuro uma vaga
     </div>
   </div>
 
@@ -250,6 +285,7 @@
     <div class="back-arrow" onclick="goBackToScreen2()">←</div>
     <div class="video-container">
       <iframe 
+        id="videoFrame"
         class="video-iframe" 
         src="https://www.youtube.com/embed/lVYBHIJy6fs?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1" 
         frameborder="0" 
@@ -264,17 +300,16 @@
   <div class="container screen" id="screen4">
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
     <div class="back-arrow" onclick="goBackToScreen3()">←</div>
-    <div class="progress-bar">
+    <div class="progress-container">
       <div class="progress-fill" style="width: 100%;"></div>
     </div>
     <div class="instructions">
       <p>No grupo somente apostamos usando contas especiais criadas na <strong>OLABET</strong> através do nosso link especial pois, essas contas especiais nos fazem sempre driblar o algoritmo e faturar muito.</p>
       <p>entao deves criar uma conta na <strong>OLABET</strong> através do link especial abaixo e depois deves depositar no minimo 10MTS para poder activares a conta.</p>
       <p>Ao fazer isso irei receber uma notificação da olabet com seu numero e irei adicionar te ao grupo</p>
-      <br>
       <p><strong>NB</strong>: ao depositar vais ganhar um bonus de 200 MTS que podes levantar se quiseres</p>
     </div>
-    <button onclick="window.location.href='https://tracking.olabet.co.mz/C.ashx?btag=a_1020b_7c_&affid=990&siteid=1020&adid=7&c='">
+    <button onclick="createSpecialAccount()">
       CRIAR CONTA ESPECIAL
     </button>
   </div>
@@ -296,14 +331,13 @@
         return;
       }
 
-      const validPrefixes = ['84', '85', '86', '87'];
+      const validPrefixes = ['82', '83', '84', '85', '86', '87'];
       if (!validPrefixes.includes(cleanNum.substring(0, 2))) {
         showError('Erro: coloque seu número corretamente');
         return;
       }
 
       input.value = cleanNum;
-
       document.getElementById('screen1').classList.remove('active');
       document.getElementById('screen2').classList.add('active');
 
@@ -320,7 +354,7 @@
         }
         document.getElementById('progressFill').style.width = progress + '%';
         document.getElementById('progressBar').style.width = progress + '%';
-        document.getElementById('percent').textContent = progress + '%';
+        document.getElementById('percentLabel').textContent = progress + '%';
       }, 300);
     }
 
@@ -328,14 +362,20 @@
       const errorBox = document.getElementById('errorMessage');
       errorBox.textContent = message;
       errorBox.classList.add('show');
-      setTimeout(() => {
-        errorBox.classList.remove('show');
-      }, 3000);
+      setTimeout(() => errorBox.classList.remove('show'), 3000);
     }
 
     function goToInstructions() {
+      const iframe = document.getElementById('videoFrame');
+      const src = iframe.src;
+      iframe.src = '';
+      setTimeout(() => iframe.src = src, 100);
       document.getElementById('screen3').classList.remove('active');
       document.getElementById('screen4').classList.add('active');
+    }
+
+    function createSpecialAccount() {
+      window.location.href = 'https://tracking.olabet.co.mz/C.ashx?btag=a_1020b_7c_&affid=990&siteid=1020&adid=7&c=';
     }
 
     function goBackToScreen1() {
@@ -354,4 +394,4 @@
     }
   </script>
 </body>
-  </html>
+    </html>
