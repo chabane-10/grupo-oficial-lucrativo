@@ -16,25 +16,45 @@
       padding: 10px;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       min-height: 100vh;
       overflow-x: hidden;
     }
     .container {
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
       padding: 20px;
       text-align: center;
       position: relative;
       opacity: 0;
       transform: translateY(20px);
-      animation: fadeInUp 4s forwards;
+      animation: fadeInUp 4.5s forwards;
     }
     @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    .logo {
+      width: 200px;
+      height: auto;
+      margin: 0 auto 10px;
+      display: block;
+    }
+
+    .step-progress-bar {
+      height: 6px;
+      background: #D9D9D9;
+      border-radius: 3px;
+      margin: 5px auto;
+      width: 90%;
+      overflow: hidden;
+    }
+    .step-progress-fill {
+      height: 100%;
+      background: #00B050;
     }
 
     .error-box {
@@ -59,51 +79,43 @@
       opacity: 1;
     }
 
-    .logo {
-      width: 200px;
-      height: auto;
-      margin: 0 auto 15px;
-      display: block;
-    }
-
-    /* ✨ Barra de progresso muito bonita (segunda tela) */
-    .progress-container {
-      height: 24px;
-      background: #f5f5f5;
-      border-radius: 12px;
+    .big-green-bar {
+      height: 30px;
+      background: #D9D9D9;
+      border-radius: 15px;
+      margin: 20px auto;
+      width: 90%;
       overflow: hidden;
-      margin: 15px auto;
-      width: 90%;
       position: relative;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .progress-fill {
+    .big-green-fill {
       height: 100%;
-      background: linear-gradient(to right, #4caf50, #8bc34a);
-      transition: width 0.4s ease-out;
-      border-radius: 12px;
-      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+      background: linear-gradient(to right, #00B050, #4CAF50);
+      transition: width 0.6s cubic-bezier(0.2, 0.9, 0.4, 1);
+      border-radius: 15px;
     }
 
-    .percent-label {
-      font-size: 16px;
+    .loading-text {
+      font-size: 22px;
       font-weight: bold;
-      color: #333;
-      text-align: right;
-      margin-bottom: 5px;
-      width: 90%;
-      margin-left: auto;
+      color: black;
+      margin: 25px 0;
+      text-align: center;
     }
 
-    .middle-text {
-      font-size: 19px;
+    .video-instruction {
+      font-size: 18px;
       font-weight: bold;
-      color: #333;
-      margin: 15px 0;
+      color: #000000;
+      margin-top: 30px;
+      line-height: 1.4;
+      text-align: center;
+      animation: pulseGlow 1.8s infinite ease-in-out;
     }
 
     .label {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: bold;
       margin: 20px 0 10px;
       text-align: left;
@@ -111,17 +123,17 @@
     }
     input {
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 17px;
+      font-size: 18px;
       background: #f9f9f9;
       margin: 10px 0;
       text-align: center;
     }
     button {
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       background: #4caf50;
       color: white;
       border: none;
@@ -145,39 +157,44 @@
       background: #3d8b40;
     }
 
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.02); opacity: 0.9; }
+    }
+
     #screen4 button {
       animation: pulseGlow 1.4s infinite ease-in-out;
     }
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-      50% { transform: scale(1.03); box-shadow: 0 6px 14px rgba(76, 175, 80, 0.6); }
-    }
 
+    /* ✅ Termos: centralizado verticalmente na primeira tela */
     .disclaimer {
       font-size: 14px;
-      color: black;
+      color: #555;
       text-align: left;
-      margin-top: 20px;
+      margin: 30px auto 10px;
       line-height: 1.5;
+      max-width: 90%;
     }
     .disclaimer strong {
       font-weight: bold;
       color: black;
     }
+
     .screen {
       display: none;
     }
     .screen.active {
       display: block;
     }
+
     .video-container {
       position: relative;
       width: 100%;
-      padding-bottom: 75%;
+      padding-bottom: 97%;
       margin: 20px 0;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.18);
     }
     .video-iframe {
       position: absolute;
@@ -187,9 +204,10 @@
       height: 100%;
       border: none;
     }
+
     .instructions {
       text-align: left;
-      font-size: 19px;
+      font-size: 20px;
       line-height: 1.6;
       margin: 20px 0;
       color: black;
@@ -203,19 +221,29 @@
     }
     .back-arrow {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 15px;
+      left: 15px;
       font-size: 24px;
       cursor: pointer;
       z-index: 10;
       color: #333;
     }
+    /* ✅ Marca d’água puxada para BAIXO */
     .watermark {
-      font-size: 14px; /* ✅ Aumento sutil */
+      font-size: 18px;
       color: #888;
-      margin-top: 30px;
+      margin-top: 60px; /* puxado bem para baixo */
       text-align: center;
       line-height: 1.4;
+    }
+
+    /* ✅ Segunda tela: conteúdo centralizado verticalmente */
+    #screen2 .content-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 400px; /* altura mínima para centralização */
+      padding: 0 20px;
     }
 
     @media (max-width: 500px) {
@@ -223,20 +251,34 @@
         padding: 15px;
       }
       .logo {
-        width: 180px;
+        width: 170px;
       }
-      .label, .instructions, .middle-text {
-        font-size: 17px;
+      .label, .instructions {
+        font-size: 18px;
       }
-      input, button {
-        padding: 12px;
+      .loading-text {
+        font-size: 20px;
+      }
+      .video-instruction {
         font-size: 16px;
       }
-      .percent-label {
-        font-size: 15px;
+      input, button {
+        padding: 14px;
+        font-size: 16px;
+      }
+      .big-green-bar {
+        height: 26px;
       }
       .watermark {
+        font-size: 16px;
+        margin-top: 50px;
+      }
+      .disclaimer {
         font-size: 13px;
+        margin: 25px auto 10px;
+      }
+      #screen2 .content-center {
+        min-height: 350px;
       }
     }
   </style>
@@ -244,46 +286,53 @@
 <body>
   <!-- TELA 1 -->
   <div class="container screen active" id="screen1">
-    <div class="error-box" id="errorMessage"></div>
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
-    <div class="progress-container">
-      <div class="progress-fill" style="width: 20%;"></div>
+    <div class="step-progress-bar">
+      <div class="step-progress-fill" style="width: 25%;"></div>
     </div>
+    <div class="error-box" id="errorMessage"></div>
     <div class="label">ESCREVA SEU NUMERO DO WHATSAPP</div>
     <input type="tel" id="whatsapp" placeholder="Digite aqui o seu número..." maxlength="9" inputmode="numeric" />
     <button onclick="validateAndContinue()">Continuar</button>
+    
+    <!-- ✅ Termos centralizados -->
     <p class="disclaimer">
       Ao clicar em alguma das opções, você concorda com os <strong>Termos de utilização e serviço</strong>, <strong>Política de privacidade</strong>, <strong>Política de subscrição</strong> e <strong>Política de cookies</strong>.
     </p>
-    <div class="watermark">Desenvolvido por: @hacker ABD</div>
+    
+    <!-- ✅ Marca d’água puxada para BAIXO -->
+    <div class="watermark">Desenvolvido por: @ Hacker Abd</div>
   </div>
 
   <!-- TELA 2 -->
   <div class="container screen" id="screen2">
+    <!-- ✅ Imagem e barra de etapas permanecem no topo -->
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
+    <div class="step-progress-bar">
+      <div class="step-progress-fill" style="width: 50%;"></div>
+    </div>
     <div class="back-arrow" onclick="goBackToScreen1()">←</div>
-    
-    <div class="percent-label" id="percentLabel">0%</div>
-    <div class="progress-container">
-      <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
-    </div>
 
-    <div class="middle-text">
-      Procurando uma vaga no grupo
-    </div>
-
-    <div class="progress-container">
-      <div class="progress-fill" id="progressBar" style="width: 0%;"></div>
-    </div>
-
-    <div style="font-size: 18px; font-weight: bold; margin-top: 15px; color: #333;">
-      Assista ao próximo vídeo enquanto procuro uma vaga
+    <!-- ✅ Conteúdo centralizado verticalmente -->
+    <div class="content-center">
+      <div class="loading-text" id="dynamicText">
+        Procurando uma vaga no grupo (0%)
+      </div>
+      <div class="big-green-bar">
+        <div class="big-green-fill" id="bigGreenFill" style="width: 0%;"></div>
+      </div>
+      <div class="video-instruction">
+        Assista ao proximo video enquanto procuro uma vaga
+      </div>
     </div>
   </div>
 
   <!-- TELA 3 -->
   <div class="container screen" id="screen3">
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
+    <div class="step-progress-bar">
+      <div class="step-progress-fill" style="width: 75%;"></div>
+    </div>
     <div class="back-arrow" onclick="goBackToScreen2()">←</div>
     <div class="video-container">
       <iframe 
@@ -301,10 +350,10 @@
   <!-- TELA 4 -->
   <div class="container screen" id="screen4">
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
-    <div class="back-arrow" onclick="goBackToScreen3()">←</div>
-    <div class="progress-container">
-      <div class="progress-fill" style="width: 100%;"></div>
+    <div class="step-progress-bar">
+      <div class="step-progress-fill" style="width: 100%;"></div>
     </div>
+    <div class="back-arrow" onclick="goBackToScreen3()">←</div>
     <div class="instructions">
       <p>No grupo somente apostamos usando contas especiais criadas na <strong>OLABET</strong> através do nosso link especial pois, essas contas especiais nos fazem sempre driblar o algoritmo e faturar muito.</p>
       <p>entao deves criar uma conta na <strong>OLABET</strong> através do link especial abaixo e depois deves depositar no minimo 10MTS para poder activares a conta.</p>
@@ -317,6 +366,8 @@
   </div>
 
   <script>
+    let lastVideoTime = 0;
+
     function validateAndContinue() {
       const input = document.getElementById('whatsapp');
       const num = input.value.trim();
@@ -342,22 +393,6 @@
       input.value = cleanNum;
       document.getElementById('screen1').classList.remove('active');
       document.getElementById('screen2').classList.add('active');
-
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 3) + 1;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(interval);
-          setTimeout(() => {
-            document.getElementById('screen2').classList.remove('active');
-            document.getElementById('screen3').classList.add('active');
-          }, 500);
-        }
-        document.getElementById('progressFill').style.width = progress + '%';
-        document.getElementById('progressBar').style.width = progress + '%';
-        document.getElementById('percentLabel').textContent = progress + '%';
-      }, 300);
     }
 
     function showError(message) {
@@ -367,22 +402,67 @@
       setTimeout(() => errorBox.classList.remove('show'), 3000);
     }
 
+    function simulateProgress() {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 3) + 1;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          setTimeout(() => {
+            document.getElementById('screen2').classList.remove('active');
+            document.getElementById('screen3').classList.add('active');
+            updateStepProgress('screen3');
+          }, 500);
+        }
+        document.getElementById('bigGreenFill').style.width = progress + '%';
+        document.getElementById('dynamicText').textContent = `Procurando uma vaga no grupo (${progress}%)`;
+      }, 300);
+    }
+
+    function validateAndContinue() {
+      const input = document.getElementById('whatsapp');
+      const num = input.value.trim();
+      const errorBox = document.getElementById('errorMessage');
+
+      if (!num) {
+        showError('Atenção: coloque seu número para ser adicionado no grupo');
+        return;
+      }
+
+      const cleanNum = num.replace(/\D/g, '');
+      if (cleanNum.length !== 9) {
+        showError('Erro: coloque seu número corretamente');
+        return;
+      }
+
+      const validPrefixes = ['82', '83', '84', '85', '86', '87'];
+      if (!validPrefixes.includes(cleanNum.substring(0, 2))) {
+        showError('Erro: coloque seu número corretamente');
+        return;
+      }
+
+      input.value = cleanNum;
+      document.getElementById('screen1').classList.remove('active');
+      document.getElementById('screen2').classList.add('active');
+      simulateProgress();
+    }
+
     function goToInstructions() {
+      lastVideoTime = Math.floor(Math.random() * 30);
       const iframe = document.getElementById('videoFrame');
-      const src = iframe.src;
       iframe.src = '';
-      setTimeout(() => iframe.src = src, 100);
       document.getElementById('screen3').classList.remove('active');
       document.getElementById('screen4').classList.add('active');
+      updateStepProgress('screen4');
     }
 
-    function createSpecialAccount() {
-      window.location.href = 'https://tracking.olabet.co.mz/C.ashx?btag=a_1020b_7c_&affid=990&siteid=1020&adid=7&c=';
-    }
-
-    function goBackToScreen1() {
-      document.getElementById('screen2').classList.remove('active');
-      document.getElementById('screen1').classList.add('active');
+    function goBackToScreen3() {
+      const iframe = document.getElementById('videoFrame');
+      iframe.src = `https://www.youtube.com/embed/lVYBHIJy6fs?start=${lastVideoTime}&controls=1&rel=0&showinfo=0&modestbranding=1`;
+      document.getElementById('screen4').classList.remove('active');
+      document.getElementById('screen3').classList.add('active');
+      updateStepProgress('screen3');
     }
 
     function goBackToScreen2() {
@@ -390,10 +470,22 @@
       document.getElementById('screen2').classList.add('active');
     }
 
-    function goBackToScreen3() {
-      document.getElementById('screen4').classList.remove('active');
-      document.getElementById('screen3').classList.add('active');
+    function goBackToScreen1() {
+      document.getElementById('screen2').classList.remove('active');
+      document.getElementById('screen1').classList.add('active');
+      updateStepProgress('screen1');
+    }
+
+    function createSpecialAccount() {
+      window.location.href = 'https://tracking.olabet.co.mz/C.ashx?btag=a_1020b_7c_&affid=990&siteid=1020&adid=7&c=';
+    }
+
+    function updateStepProgress(screenId) {
+      const fill = document.querySelector('.step-progress-fill');
+      if (screenId === 'screen1') fill.style.width = '25%';
+      else if (screenId === 'screen3') fill.style.width = '75%';
+      else if (screenId === 'screen4') fill.style.width = '100%';
     }
   </script>
 </body>
-</html>
+        </html>
