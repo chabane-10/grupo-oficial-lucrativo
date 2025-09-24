@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aviator - Grupo Exclusivo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      transition: all 0.4s ease;
+    }
+    body {
+      background: white;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 500px;
+      width: 100%;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 0.6s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logo {
+      width: 140px;
+      height: auto;
+      margin: 0 auto 20px;
+      display: block;
+      animation: bounceIn 0.8s ease;
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.95); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .progress-bar {
+      height: 10px;
+      background: #ddd;
+      border-radius: 5px;
+      margin: 20px 0;
+      overflow: hidden;
+      animation: slideInLeft 0.6s ease;
+    }
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .progress-fill {
+      height: 100%;
+      width: 20%;
+      background: #4caf50;
+      transition: width 0.3s ease;
+    }
+    .label {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 20px 0 15px;
+      text-align: left;
+      animation: slideInRight 0.6s ease;
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    input {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 18px;
+      background: #eee;
+      margin: 15px 0;
+      text-align: center;
+      animation: pulse 0.8s ease infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.02); }
+    }
+    button {
+      width: 100%;
+      padding: 16px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 20px 0;
+      animation: zoomIn 0.5s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    button:hover {
+      background: #45a049;
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .disclaimer {
+      font-size: 14px;
+      color: #666;
+      text-align: left;
+      margin-top: 20px;
+      line-height: 1.4;
+      animation: fadeInUp 0.6s ease;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .error-box {
+      background: #d32f2f;
+      color: white;
+      padding: 18px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-weight: bold;
+      display: none;
+      text-align: left;
+      font-size: 18px;
+      animation: shake 0.5s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+    }
+    .loading-text {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 20px 0;
+      text-align: left;
+      animation: slideInDown 0.6s ease;
+    }
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      margin: 20px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease;
+    }
+    .video-iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .video-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      z-index: 10;
+      animation: slideInUp 0.6s ease;
+    }
+    @keyframes slideInUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .instructions {
+      text-align: left;
+      font-size: 18px;
+      line-height: 1.6;
+      margin: 20px 0;
+      animation: fadeIn 0.6s ease;
+    }
+    .instructions strong {
+      font-weight: bold;
+      color: #e53935;
+    }
+    .back-arrow {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10;
+      color: #666;
+      animation: swing 0.8s ease infinite;
+    }
+    @keyframes swing {
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(15deg); }
+      40% { transform: rotate(-10deg); }
+      60% { transform: rotate(5deg); }
+      80% { transform: rotate(-5deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 15px;
+      }
+      .logo {
+        width: 120px;
+      }
+      .progress-bar {
+        height: 8px;
+      }
+      .progress-fill {
+        height: 8px;
+      }
+      .label {
+        font-size: 18px;
+      }
+      input {
+        padding: 14px;
+        font-size: 16px;
+      }
+      button {
+        padding: 14px;
+        font-size: 18px;
+      }
+      .disclaimer {
+        font-size: 12px;
+      }
+      .loading-text {
+        font-size: 18px;
+      }
+      .video-title {
+        font-size: 16px;
+      }
+      .instructions {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- TELA 1: Entrada do WhatsApp -->
+  <div class="container screen active" id="screen1">
+    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="label">ESCREVA SEU NUMERO DO WHATSAPP *</div>
+    <input type="tel" id="whatsapp" placeholder="Digite aqui..." maxlength="13" />
+    <button onclick="validateAndContinue()">Continuar</button>
+    <div class="error-box" id="errorMessage">
+      Ops!<br>
+      Preencha todos os campos e opções antes de continuar.
+    </div>
+    <p class="disclaimer">
+      Ao clicar em alguma das opções, você concorda com os Termos de utilização e serviço, Política de privacidade, Política de subscrição e Política de cookies.
+    </p>
+  </div>
+
+  <!-- TELA 2: Carregando -->
+  <div class="container screen" id="screen2">
+    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <div class="back-arrow" onclick="goBackToScreen1()">←</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="loading-text">
+      Procurando uma vaga no grupo <span id="percent">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+    <p style="text-align: center; margin-top: 15px; font-size: 18px;">
+      assista ao proximo video enquanto procuro uma vaga
+    </p>
+  </div>
+
+  <!-- TELA 3: Vídeo incorporado -->
+  <div class="container screen" id="screen3">
+    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <div class="back-arrow" onclick="goBackToScreen2()">←</div>
+    <div class="video-container">
+      <div class="video-title">
+        SEGREDO DO AVIATOR<br>
+        <span style="font-size: 14px;">Osvaldo Quives</span>
+      </div>
+      <iframe 
+        class="video-iframe" 
+        src="https://www.youtube.com/embed/lVYBHIJy6fs?autoplay=0&controls=1&showinfo=0&rel=0" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+    </div>
+    <button onclick="goToInstructions()">CONTINUAR</button>
+  </div>
+
+  <!-- TELA 4: Instruções -->
+  <div class="container screen" id="screen4">
+    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <div class="back-arrow" onclick="goBackToScreen3()">←</div>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 100%;"></div>
+    </div>
+    <div class="instructions">
+      <p>No grupo somente apostamos usando contas especiais criadas na <strong>*OLABET*</strong> através do nosso link especial pois, essas contas especiais nos fazem sempre driblar o algoritmo e faturar muito.</p>
+      <p>entao deves criar uma conta na <strong>*OLABET*</strong> através do link especial abaixo e depois deves depositar no minimo 10MTS para poder activares a conta.</p>
+      <p>Ao fazer isso irei receber uma notificação da olabet com seu numero e irei adicionar te ao grupo</p>
+      <p><strong>*Nb*</strong>: ao depositar vais ganhar um bonus de 200 MTS que podes levantar se quiseres</p>
+    </div>
+    <button onclick="window.location.href='https://tracking.olabet.co.mz/C.ashx?btag=a_1020b_7c_&affid=990&siteid=1020&adid=7&c='">
+      CRIAR CONTA ESPECIAL
+    </button>
+  </div>
+
+  <script>
+    function validateAndContinue() {
+      const num = document.getElementById('whatsapp').value.trim();
+      const errorBox = document.getElementById('errorMessage');
+
+      if (!num || num.length < 9) {
+        errorBox.style.display = 'block';
+        setTimeout(() => {
+          errorBox.style.display = 'none';
+        }, 3000);
+        return;
+      }
+
+      document.getElementById('screen1').classList.remove('active');
+      document.getElementById('screen2').classList.add('active');
+
+      // Simula progresso até 100%
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 3) + 1;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          setTimeout(() => {
+            document.getElementById('screen2').classList.remove('active');
+            document.getElementById('screen3').classList.add('active');
+          }, 500);
+        }
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('progressBar').style.width = progress + '%';
+        document.getElementById('percent').textContent = progress + '%';
+      }, 300);
+    }
+
+    function goToInstructions() {
+      document.getElementById('screen3').classList.remove('active');
+      document.getElementById('screen4').classList.add('active');
+    }
+
+    function goBackToScreen1() {
+      document.getElementById('screen2').classList.remove('active');
+      document.getElementById('screen1').classList.add('active');
+    }
+
+    function goBackToScreen2() {
+      document.getElementById('screen3').classList.remove('active');
+      document.getElementById('screen2').classList.add('active');
+    }
+
+    function goBackToScreen3() {
+      document.getElementById('screen4').classList.remove('active');
+      document.getElementById('screen3').classList.add('active');
+    }
+  </script>
+</body>
+</html>
