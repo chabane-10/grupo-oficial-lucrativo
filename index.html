@@ -10,7 +10,6 @@
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, sans-serif;
-      transition: all 0.4s ease;
     }
     body {
       background: white;
@@ -27,120 +26,106 @@
       padding: 25px;
       text-align: center;
       position: relative;
-      animation: fadeIn 0.6s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 4s forwards;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
+    /* ✨ Mensagem de erro: acima da imagem, sem cobrir */
+    .error-box {
+      position: absolute;
+      top: -60px; /* acima do contêiner */
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #d32f2f;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 100;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .error-box.show {
+      top: 20px; /* desce suavemente para cima da imagem, mas NÃO a cobre */
+      transform: translateX(-50%) scale(1);
+      opacity: 1;
+    }
+
     .logo {
-      width: 140px;
+      width: 200px;
       height: auto;
-      margin: 0 auto 20px;
+      margin: 0 auto 15px;
       display: block;
-      animation: bounceIn 0.8s ease;
-    }
-    @keyframes bounceIn {
-      0% { transform: scale(0.3); opacity: 0; }
-      50% { transform: scale(1.05); }
-      70% { transform: scale(0.95); }
-      100% { transform: scale(1); opacity: 1; }
     }
     .progress-bar {
-      height: 10px;
-      background: #ddd;
-      border-radius: 5px;
-      margin: 20px 0;
+      height: 12px;
+      background: #eee;
+      border-radius: 6px;
+      margin: 15px 0;
       overflow: hidden;
-      animation: slideInLeft 0.6s ease;
-    }
-    @keyframes slideInLeft {
-      from { transform: translateX(-100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
     }
     .progress-fill {
       height: 100%;
-      width: 20%;
       background: #4caf50;
-      transition: width 0.3s ease;
+      transition: width 0.5s ease;
     }
     .label {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: bold;
-      margin: 20px 0 15px;
+      margin: 20px 0 10px;
       text-align: left;
-      animation: slideInRight 0.6s ease;
-    }
-    @keyframes slideInRight {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      color: black;
     }
     input {
       width: 100%;
-      padding: 16px;
-      border: 1px solid #ddd;
+      padding: 14px;
+      border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 18px;
-      background: #eee;
-      margin: 15px 0;
+      font-size: 17px;
+      background: #f9f9f9;
+      margin: 10px 0;
       text-align: center;
-      animation: pulse 0.8s ease infinite alternate;
-    }
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.02); }
     }
     button {
       width: 100%;
-      padding: 16px;
+      padding: 14px;
       background: #4caf50;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
       margin: 20px 0;
-      animation: zoomIn 0.5s ease;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      animation: buttonPulse 2s ease;
+      transition: all 0.2s ease;
     }
-    @keyframes zoomIn {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    @keyframes buttonPulse {
+      0% { transform: scale(1); opacity: 0; }
+      70% { transform: scale(1.02); }
+      100% { transform: scale(1); opacity: 1; }
     }
-    button:hover {
-      background: #45a049;
-      transform: scale(1.03);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    button:active {
+      transform: scale(0.96);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      background: #3d8b40;
     }
     .disclaimer {
       font-size: 14px;
-      color: #666;
+      color: #555;
       text-align: left;
       margin-top: 20px;
-      line-height: 1.4;
-      animation: fadeInUp 0.6s ease;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .error-box {
-      background: #d32f2f;
-      color: white;
-      padding: 18px;
-      border-radius: 8px;
-      margin: 20px 0;
-      font-weight: bold;
-      display: none;
-      text-align: left;
-      font-size: 18px;
-      animation: shake 0.5s ease;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-10px); }
-      40%, 80% { transform: translateX(10px); }
+      line-height: 1.5;
     }
     .screen {
       display: none;
@@ -149,25 +134,20 @@
       display: block;
     }
     .loading-text {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: bold;
       margin: 20px 0;
       text-align: left;
-      animation: slideInDown 0.6s ease;
-    }
-    @keyframes slideInDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      color: black;
     }
     .video-container {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      padding-bottom: 56.25%;
       margin: 20px 0;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      animation: fadeIn 0.6s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     .video-iframe {
       position: absolute;
@@ -177,33 +157,16 @@
       height: 100%;
       border: none;
     }
-    .video-title {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 10px;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      z-index: 10;
-      animation: slideInUp 0.6s ease;
-    }
-    @keyframes slideInUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
     .instructions {
       text-align: left;
-      font-size: 18px;
+      font-size: 19px;
       line-height: 1.6;
       margin: 20px 0;
-      animation: fadeIn 0.6s ease;
+      color: black;
     }
     .instructions strong {
       font-weight: bold;
-      color: #e53935;
+      color: black;
     }
     .back-arrow {
       position: absolute;
@@ -212,105 +175,83 @@
       font-size: 24px;
       cursor: pointer;
       z-index: 10;
-      color: #666;
-      animation: swing 0.8s ease infinite;
+      color: #333;
     }
-    @keyframes swing {
-      0% { transform: rotate(0deg); }
-      20% { transform: rotate(15deg); }
-      40% { transform: rotate(-10deg); }
-      60% { transform: rotate(5deg); }
-      80% { transform: rotate(-5deg); }
-      100% { transform: rotate(0deg); }
+    .watermark {
+      font-size: 12px;
+      color: #888;
+      margin-top: 30px;
+      text-align: center;
+      line-height: 1.4;
     }
+
     @media (max-width: 500px) {
       .container {
         padding: 15px;
       }
       .logo {
-        width: 120px;
-      }
-      .progress-bar {
-        height: 8px;
-      }
-      .progress-fill {
-        height: 8px;
+        width: 180px;
       }
       .label {
-        font-size: 18px;
+        font-size: 17px;
       }
       input {
-        padding: 14px;
+        padding: 12px;
         font-size: 16px;
       }
       button {
-        padding: 14px;
-        font-size: 18px;
-      }
-      .disclaimer {
-        font-size: 12px;
-      }
-      .loading-text {
-        font-size: 18px;
-      }
-      .video-title {
+        padding: 12px;
         font-size: 16px;
       }
       .instructions {
-        font-size: 16px;
+        font-size: 17px;
+      }
+      .loading-text {
+        font-size: 17px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- TELA 1: Entrada do WhatsApp -->
+  <!-- TELA 1 -->
   <div class="container screen active" id="screen1">
-    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <div class="error-box" id="errorMessage"></div>
+    <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
     <div class="progress-bar">
-      <div class="progress-fill"></div>
+      <div class="progress-fill" style="width: 20%;"></div>
     </div>
-    <div class="label">ESCREVA SEU NUMERO DO WHATSAPP *</div>
-    <input type="tel" id="whatsapp" placeholder="Digite aqui..." maxlength="13" />
+    <div class="label">ESCREVA SEU NUMERO DO WHATSAPP</div>
+    <input type="tel" id="whatsapp" placeholder="Digite aqui o seu número..." maxlength="9" inputmode="numeric" />
     <button onclick="validateAndContinue()">Continuar</button>
-    <div class="error-box" id="errorMessage">
-      Ops!<br>
-      Preencha todos os campos e opções antes de continuar.
-    </div>
     <p class="disclaimer">
       Ao clicar em alguma das opções, você concorda com os Termos de utilização e serviço, Política de privacidade, Política de subscrição e Política de cookies.
     </p>
+    <div class="watermark">Desenvolvido por: @hacker ABD</div>
   </div>
 
-  <!-- TELA 2: Carregando -->
+  <!-- TELA 2 -->
   <div class="container screen" id="screen2">
-    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
     <div class="back-arrow" onclick="goBackToScreen1()">←</div>
     <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+      <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
     </div>
     <div class="loading-text">
       Procurando uma vaga no grupo <span id="percent">0%</span>
     </div>
     <div class="progress-bar">
-      <div class="progress-fill" id="progressBar"></div>
+      <div class="progress-fill" id="progressBar" style="width: 0%;"></div>
     </div>
-    <p style="text-align: center; margin-top: 15px; font-size: 18px;">
-      assista ao proximo video enquanto procuro uma vaga
-    </p>
   </div>
 
-  <!-- TELA 3: Vídeo incorporado -->
+  <!-- TELA 3 -->
   <div class="container screen" id="screen3">
-    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
     <div class="back-arrow" onclick="goBackToScreen2()">←</div>
     <div class="video-container">
-      <div class="video-title">
-        SEGREDO DO AVIATOR<br>
-        <span style="font-size: 14px;">Osvaldo Quives</span>
-      </div>
       <iframe 
         class="video-iframe" 
-        src="https://www.youtube.com/embed/lVYBHIJy6fs?autoplay=0&controls=1&showinfo=0&rel=0" 
+        src="https://www.youtube.com/embed/lVYBHIJy6fs?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen>
@@ -319,18 +260,19 @@
     <button onclick="goToInstructions()">CONTINUAR</button>
   </div>
 
-  <!-- TELA 4: Instruções -->
+  <!-- TELA 4 -->
   <div class="container screen" id="screen4">
-    <img src="https://postimg.cc/nsKm2yh1" alt="Aviator" class="logo">
+    <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
     <div class="back-arrow" onclick="goBackToScreen3()">←</div>
     <div class="progress-bar">
       <div class="progress-fill" style="width: 100%;"></div>
     </div>
     <div class="instructions">
-      <p>No grupo somente apostamos usando contas especiais criadas na <strong>*OLABET*</strong> através do nosso link especial pois, essas contas especiais nos fazem sempre driblar o algoritmo e faturar muito.</p>
-      <p>entao deves criar uma conta na <strong>*OLABET*</strong> através do link especial abaixo e depois deves depositar no minimo 10MTS para poder activares a conta.</p>
+      <p>No grupo somente apostamos usando contas especiais criadas na <strong>OLABET</strong> através do nosso link especial pois, essas contas especiais nos fazem sempre driblar o algoritmo e faturar muito.</p>
+      <p>entao deves criar uma conta na <strong>OLABET</strong> através do link especial abaixo e depois deves depositar no minimo 10MTS para poder activares a conta.</p>
       <p>Ao fazer isso irei receber uma notificação da olabet com seu numero e irei adicionar te ao grupo</p>
-      <p><strong>*Nb*</strong>: ao depositar vais ganhar um bonus de 200 MTS que podes levantar se quiseres</p>
+      <br>
+      <p><strong>NB</strong>: ao depositar vais ganhar um bonus de 200 MTS que podes levantar se quiseres</p>
     </div>
     <button onclick="window.location.href='https://tracking.olabet.co.mz/C.ashx?btag=a_1020b_7c_&affid=990&siteid=1020&adid=7&c='">
       CRIAR CONTA ESPECIAL
@@ -339,21 +281,32 @@
 
   <script>
     function validateAndContinue() {
-      const num = document.getElementById('whatsapp').value.trim();
+      const input = document.getElementById('whatsapp');
+      const num = input.value.trim();
       const errorBox = document.getElementById('errorMessage');
 
-      if (!num || num.length < 9) {
-        errorBox.style.display = 'block';
-        setTimeout(() => {
-          errorBox.style.display = 'none';
-        }, 3000);
+      if (!num) {
+        showError('Atenção: coloque seu número para ser adicionado no grupo');
         return;
       }
+
+      const cleanNum = num.replace(/\D/g, '');
+      if (cleanNum.length !== 9) {
+        showError('Erro: coloque seu número corretamente');
+        return;
+      }
+
+      const validPrefixes = ['84', '85', '86', '87'];
+      if (!validPrefixes.includes(cleanNum.substring(0, 2))) {
+        showError('Erro: coloque seu número corretamente');
+        return;
+      }
+
+      input.value = cleanNum;
 
       document.getElementById('screen1').classList.remove('active');
       document.getElementById('screen2').classList.add('active');
 
-      // Simula progresso até 100%
       let progress = 0;
       const interval = setInterval(() => {
         progress += Math.floor(Math.random() * 3) + 1;
@@ -369,6 +322,15 @@
         document.getElementById('progressBar').style.width = progress + '%';
         document.getElementById('percent').textContent = progress + '%';
       }, 300);
+    }
+
+    function showError(message) {
+      const errorBox = document.getElementById('errorMessage');
+      errorBox.textContent = message;
+      errorBox.classList.add('show');
+      setTimeout(() => {
+        errorBox.classList.remove('show');
+      }, 3000);
     }
 
     function goToInstructions() {
@@ -392,4 +354,4 @@
     }
   </script>
 </body>
-</html>
+  </html>
