@@ -44,17 +44,35 @@
       display: block;
     }
 
-    .step-progress-bar {
-      height: 6px;
+    #screen4 .logo {
+      width: 280px;
+      margin: 0 auto 15px;
+    }
+
+    .step-progress-bar,
+    .big-green-bar {
       background: #D9D9D9;
-      border-radius: 3px;
-      margin: 5px auto;
+      border-radius: 15px;
+      margin: 20px auto;
       width: 90%;
       overflow: hidden;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .step-progress-fill {
+    .step-progress-bar {
+      height: 6px;
+      margin: 5px auto;
+      border-radius: 3px;
+    }
+    .step-progress-fill,
+    .big-green-fill {
       height: 100%;
-      background: #00B050;
+      background: #007A3D;
+      transition: width 0.6s cubic-bezier(0.2, 0.9, 0.4, 1);
+      border-radius: inherit;
+    }
+    .big-green-bar {
+      height: 30px;
     }
 
     .error-box {
@@ -77,23 +95,6 @@
       top: 10px;
       transform: translateX(-50%) scale(1);
       opacity: 1;
-    }
-
-    .big-green-bar {
-      height: 30px;
-      background: #D9D9D9;
-      border-radius: 15px;
-      margin: 20px auto;
-      width: 90%;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .big-green-fill {
-      height: 100%;
-      background: linear-gradient(to right, #00B050, #4CAF50);
-      transition: width 0.6s cubic-bezier(0.2, 0.9, 0.4, 1);
-      border-radius: 15px;
     }
 
     .loading-text {
@@ -131,10 +132,11 @@
       margin: 10px 0;
       text-align: center;
     }
+
     button {
       width: 100%;
       padding: 16px;
-      background: #4caf50;
+      background: #007A3D;
       color: white;
       border: none;
       border-radius: 8px;
@@ -146,15 +148,11 @@
       animation: buttonPulse 2s ease;
       transition: all 0.2s ease;
     }
-    @keyframes buttonPulse {
-      0% { transform: scale(1); opacity: 0; }
-      70% { transform: scale(1.02); }
-      100% { transform: scale(1); opacity: 1; }
-    }
+    button:hover,
     button:active {
-      transform: scale(0.96);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-      background: #3d8b40;
+      background: #005a2d;
+      transform: scale(1.02);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     @keyframes pulseGlow {
@@ -166,7 +164,6 @@
       animation: pulseGlow 1.4s infinite ease-in-out;
     }
 
-    /* ✅ Termos: centralizado verticalmente na primeira tela */
     .disclaimer {
       font-size: 14px;
       color: #555;
@@ -195,6 +192,7 @@
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+      background: #f0f0f0; /* fallback visual */
     }
     .video-iframe {
       position: absolute;
@@ -204,16 +202,29 @@
       height: 100%;
       border: none;
     }
+    .video-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #888;
+      font-size: 16px;
+    }
 
+    /* ✅ Texto da última tela AUMENTADO */
     .instructions {
       text-align: left;
-      font-size: 20px;
-      line-height: 1.6;
+      font-size: 19px; /* aumentado */
+      line-height: 1.5;
       margin: 20px 0;
       color: black;
     }
     .instructions p {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .instructions strong {
       font-weight: bold;
@@ -228,21 +239,19 @@
       z-index: 10;
       color: #333;
     }
-    /* ✅ Marca d’água puxada para BAIXO */
     .watermark {
       font-size: 18px;
       color: #888;
-      margin-top: 60px; /* puxado bem para baixo */
+      margin-top: 60px;
       text-align: center;
       line-height: 1.4;
     }
 
-    /* ✅ Segunda tela: conteúdo centralizado verticalmente */
     #screen2 .content-center {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 400px; /* altura mínima para centralização */
+      min-height: 400px;
       padding: 0 20px;
     }
 
@@ -253,8 +262,11 @@
       .logo {
         width: 170px;
       }
+      #screen4 .logo {
+        width: 240px;
+      }
       .label, .instructions {
-        font-size: 18px;
+        font-size: 18px; /* aumentado em mobile */
       }
       .loading-text {
         font-size: 20px;
@@ -294,26 +306,19 @@
     <div class="label">ESCREVA SEU NUMERO DO WHATSAPP</div>
     <input type="tel" id="whatsapp" placeholder="Digite aqui o seu número..." maxlength="9" inputmode="numeric" />
     <button onclick="validateAndContinue()">Continuar</button>
-    
-    <!-- ✅ Termos centralizados -->
     <p class="disclaimer">
       Ao clicar em alguma das opções, você concorda com os <strong>Termos de utilização e serviço</strong>, <strong>Política de privacidade</strong>, <strong>Política de subscrição</strong> e <strong>Política de cookies</strong>.
     </p>
-    
-    <!-- ✅ Marca d’água puxada para BAIXO -->
     <div class="watermark">Desenvolvido por: @ Hacker Abd</div>
   </div>
 
   <!-- TELA 2 -->
   <div class="container screen" id="screen2">
-    <!-- ✅ Imagem e barra de etapas permanecem no topo -->
     <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
     <div class="step-progress-bar">
       <div class="step-progress-fill" style="width: 50%;"></div>
     </div>
     <div class="back-arrow" onclick="goBackToScreen1()">←</div>
-
-    <!-- ✅ Conteúdo centralizado verticalmente -->
     <div class="content-center">
       <div class="loading-text" id="dynamicText">
         Procurando uma vaga no grupo (0%)
@@ -322,7 +327,7 @@
         <div class="big-green-fill" id="bigGreenFill" style="width: 0%;"></div>
       </div>
       <div class="video-instruction">
-        Assista ao proximo video enquanto procuro uma vaga
+        assista ao proximo video enquanto procuro uma vaga
       </div>
     </div>
   </div>
@@ -335,21 +340,28 @@
     </div>
     <div class="back-arrow" onclick="goBackToScreen2()">←</div>
     <div class="video-container">
+      <!-- ✅ Vídeo corrigido com atributos de compatibilidade -->
       <iframe 
         id="videoFrame"
         class="video-iframe" 
-        src="https://www.youtube.com/embed/lVYBHIJy6fs?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1" 
+        src="https://www.youtube.com/embed/lVYBHIJy6fs?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1&origin=https://seusite.com"
+        loading="lazy"
+        referrerpolicy="no-referrer"
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen>
       </iframe>
+      <!-- Fallback visual -->
+      <div class="video-placeholder" id="videoPlaceholder">
+        Carregando vídeo...
+      </div>
     </div>
     <button onclick="goToInstructions()">CONTINUAR</button>
   </div>
 
   <!-- TELA 4 -->
   <div class="container screen" id="screen4">
-    <img src="https://i.postimg.cc/QB5CMWzt/1758700640916-Screenshot-20250924-073551.jpg" alt="Aviator" class="logo">
+    <img src="https://i.postimg.cc/hjdHX7pt/IMG-20250928-WA0024.jpg" alt="Oferta Especial" class="logo">
     <div class="step-progress-bar">
       <div class="step-progress-fill" style="width: 100%;"></div>
     </div>
@@ -366,6 +378,15 @@
   </div>
 
   <script>
+    // Esconde o placeholder quando o iframe carregar
+    window.addEventListener('load', () => {
+      const iframe = document.getElementById('videoFrame');
+      const placeholder = document.getElementById('videoPlaceholder');
+      iframe.onload = () => {
+        placeholder.style.display = 'none';
+      };
+    });
+
     let lastVideoTime = 0;
 
     function validateAndContinue() {
@@ -393,16 +414,7 @@
       input.value = cleanNum;
       document.getElementById('screen1').classList.remove('active');
       document.getElementById('screen2').classList.add('active');
-    }
 
-    function showError(message) {
-      const errorBox = document.getElementById('errorMessage');
-      errorBox.textContent = message;
-      errorBox.classList.add('show');
-      setTimeout(() => errorBox.classList.remove('show'), 3000);
-    }
-
-    function simulateProgress() {
       let progress = 0;
       const interval = setInterval(() => {
         progress += Math.floor(Math.random() * 3) + 1;
@@ -420,32 +432,11 @@
       }, 300);
     }
 
-    function validateAndContinue() {
-      const input = document.getElementById('whatsapp');
-      const num = input.value.trim();
+    function showError(message) {
       const errorBox = document.getElementById('errorMessage');
-
-      if (!num) {
-        showError('Atenção: coloque seu número para ser adicionado no grupo');
-        return;
-      }
-
-      const cleanNum = num.replace(/\D/g, '');
-      if (cleanNum.length !== 9) {
-        showError('Erro: coloque seu número corretamente');
-        return;
-      }
-
-      const validPrefixes = ['82', '83', '84', '85', '86', '87'];
-      if (!validPrefixes.includes(cleanNum.substring(0, 2))) {
-        showError('Erro: coloque seu número corretamente');
-        return;
-      }
-
-      input.value = cleanNum;
-      document.getElementById('screen1').classList.remove('active');
-      document.getElementById('screen2').classList.add('active');
-      simulateProgress();
+      errorBox.textContent = message;
+      errorBox.classList.add('show');
+      setTimeout(() => errorBox.classList.remove('show'), 3000);
     }
 
     function goToInstructions() {
@@ -459,7 +450,7 @@
 
     function goBackToScreen3() {
       const iframe = document.getElementById('videoFrame');
-      iframe.src = `https://www.youtube.com/embed/lVYBHIJy6fs?start=${lastVideoTime}&controls=1&rel=0&showinfo=0&modestbranding=1`;
+      iframe.src = `https://www.youtube.com/embed/lVYBHIJy6fs?start=${lastVideoTime}&controls=1&rel=0&showinfo=0&modestbranding=1&origin=https://seusite.com`;
       document.getElementById('screen4').classList.remove('active');
       document.getElementById('screen3').classList.add('active');
       updateStepProgress('screen3');
@@ -488,4 +479,4 @@
     }
   </script>
 </body>
-        </html>
+</html>
